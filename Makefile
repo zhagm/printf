@@ -6,13 +6,13 @@
 #    By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/21 14:58:27 by zmagauin          #+#    #+#              #
-#    Updated: 2019/02/27 15:52:24 by zmagauin         ###   ########.fr        #
+#    Updated: 2019/03/04 19:23:45 by zmagauin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_printf
+NAME = libftprintf.a
 
-CFLAGS += -Wall -Wextra -Werror
+CFLAGS += 
 CFLAGS += -I libft/
 
 SRC = main.c
