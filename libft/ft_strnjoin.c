@@ -1,33 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsub.c                                        :+:      :+:    :+:   */
+/*   ft_strnjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/01 09:54:37 by zmagauin          #+#    #+#             */
-/*   Updated: 2019/03/06 18:46:57 by zmagauin         ###   ########.fr       */
+/*   Created: 2018/11/30 08:57:18 by zmagauin          #+#    #+#             */
+/*   Updated: 2019/03/06 18:47:39 by zmagauin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <stdlib.h>
 
-char	*ft_strsub(char const *s, unsigned int start, size_t len)
+char	*ft_strnjoin(char const *s1, char const *s2, size_t n)
 {
-	char	*sub_str;
-	size_t	i;
+	char	*res;
+	int		i;
+	int		j;
+	size_t	temp;
 
-	if (s == NULL)
-		return (NULL);
-	if ((sub_str = (char *)malloc((len + 1) * sizeof(*sub_str))) == NULL)
+	if (!s1 || !s2)
 		return (NULL);
 	i = 0;
-	while (i < len && s[start + i])
-	{
-		sub_str[i] = s[start + i];
+	j = 0;
+	while (s1[i])
 		i++;
-	}
-	sub_str[i] = '\0';
-	return (sub_str);
+	temp = 0;
+	while (s2[j] && temp++ < n)
+		j++;
+	if ((res = (char *)malloc((i + j) * sizeof(*res))) == NULL)
+		return (NULL);
+	i = -1;
+	while (s1[++i])
+		res[i] = s1[i];
+	j = 0;
+	temp = 0;
+	while (s2[j] && temp++ < n)
+		res[i++] = s2[j++];
+	res[i] = '\0';
+	return (res);
 }
