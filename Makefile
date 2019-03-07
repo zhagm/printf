@@ -6,7 +6,7 @@
 #    By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/21 14:58:27 by zmagauin          #+#    #+#              #
-#    Updated: 2019/03/04 19:23:45 by zmagauin         ###   ########.fr        #
+#    Updated: 2019/03/05 12:50:45 by zmagauin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,9 @@ NAME = libftprintf.a
 CFLAGS += 
 CFLAGS += -I libft/
 
-SRC = main.c
+SRC =	main.c \
+		ft_setup.c \
+		ft_parse_funcs.c \
 
 OBJ = $(SRC:.c=.o)
 

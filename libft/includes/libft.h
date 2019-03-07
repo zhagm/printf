@@ -6,7 +6,7 @@
 /*   By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/21 21:30:24 by zmagauin          #+#    #+#             */
-/*   Updated: 2019/02/26 11:55:22 by zmagauin         ###   ########.fr       */
+/*   Updated: 2019/03/06 16:16:47 by zmagauin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ void			ft_lstaddtoend(t_list **alst, t_list *new_lst);
 void			ft_printstrarr(char **array);
 int				ft_lstlen(t_list **list);
 char			**ft_dupstrarr(char **src);
+int				ft_strchrindex(const char *s, int c);
 
 #endif

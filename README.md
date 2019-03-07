@@ -5,8 +5,7 @@ is always highly useful. The main reason is the ease of its formatting, and the
 support of diverse types in variable numbers. Some variations even propose to be able to
 write the resulting string of characters either in a file descriptor or in a particular stream.
 Some also propose to recall this string without printing it. In short, undeniably, printf
-is a vital function. In this project, we ask you to recode it and add it to your libft so
-that you can use it in all your future projects.
+is a vital function. In this project, we ask you to recode it and add it to your libft so that you can use it in all your future projects.
 
 ## Objectives
 The key to a successful ft_printf is a well-structured and good extensible code. This
@@ -43,8 +42,8 @@ linked to our testing main to give you your results.
 
 * %% - prints '%'
 
-* # - specifying that the value should be printed in an ''alternate form''.  For b, c, d, s and u formats, this option has no effect. For the o formats the precision of the number is increased to force the first character of the output string to a zero.  For the x (X) format, a non-zero result has the string 0x (0X) prepended to it.  For a, A, e, E, f, F, g and G formats, the result will always contain a decimal point, even if no digits follow the point (normally, a decimal point only appears in the results of those formats if a digit follows the decimal point). For g and G formats, trailing zeros are not removed from the result as they would otherwise be;
-* - - pecifies left adjustment of the output in the indicated field;
+* \# - specifying that the value should be printed in an ''alternate form''.  For b, c, d, s and u formats, this option has no effect. For the o formats the precision of the number is increased to force the first character of the output string to a zero.  For the x (X) format, a non-zero result has the string 0x (0X) prepended to it.  For a, A, e, E, f, F, g and G formats, the result will always contain a decimal point, even if no digits follow the point (normally, a decimal point only appears in the results of those formats if a digit follows the decimal point). For g and G formats, trailing zeros are not removed from the result as they would otherwise be;
+* - - specifies left adjustment of the output in the indicated field;
 * + - specifying that there should always be a sign placed before the number when using signed formats.
 * ' ' - specifying that a blank should be left before a positive number for a signed format. A '+' overrides a space if both are used;
 * 0 - indicating that zero-padding should be used rather than blank-padding. A '-' overrides a '0' if both are used;
@@ -62,4 +61,12 @@ linked to our testing main to give you your results.
     - ap can be passed to va_arg(ap, <type_of_ap>) to get the next argument
     - each call to va_arg modifies ap so the next call to va_arg can return the next arg
     - if there's no next arg or the <type_of_ap> provided doesn't match with the arg, random errors will be thrown
+* created a struct (t_arg) to hold properties of each argument
+* Using the polytechnique website, figured out the order of flags/extras for each type and set up basic parsing, populating the t_arg with the info
+* 
+
+# Helpful resources:
+* man 3 stdarg
+* https://www.lix.polytechnique.fr/~liberti/public/computing/prog/c/C/FUNCTIONS/format.html
+* https://www.gnu.org/software/libc/manual/html_node/Formatted-Output.html
 * 
