@@ -29,6 +29,10 @@ linked to our testing main to give you your results.
     ◦ The functions of man 3 stdarg
 
 ## Mandatory Part
+char		*flags;
+int			min_width;
+int			precision;
+char		type;
 * c - The first byte of argument is printed.
 * s - Bytes from the string argument are printed until the end is reached or until the number of bytes indicated by the precision specification is reached; however if the precision is 0 or missing, the string is printed entirely.
 * p - pointer address
@@ -63,10 +67,10 @@ linked to our testing main to give you your results.
     - if there's no next arg or the <type_of_ap> provided doesn't match with the arg, random errors will be thrown
 * created a struct (t_arg) to hold properties of each argument
 * Using the polytechnique website, figured out the order of flags/extras for each type and set up basic parsing, populating the t_arg with the info
-* 
+*
 
 # Helpful resources:
 * man 3 stdarg
 * https://www.lix.polytechnique.fr/~liberti/public/computing/prog/c/C/FUNCTIONS/format.html
 * https://www.gnu.org/software/libc/manual/html_node/Formatted-Output.html
-* 
+*

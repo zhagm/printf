@@ -6,7 +6,7 @@
 /*   By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:50:04 by zmagauin          #+#    #+#             */
-/*   Updated: 2019/03/05 12:44:40 by zmagauin         ###   ########.fr       */
+/*   Updated: 2019/03/07 16:14:15 by zmagauin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,21 @@ typedef struct	s_arg
 	char		type;
 }				t_arg;
 
-int		parse_flags(char *str, t_arg *arg);
-int		parse_width(char *str, t_arg *arg);
-int		parse_precision(char *str, t_arg *arg);
-int		is_type(char c);
-int		parse_type(char *str, t_arg *arg);
-
+// main funcs
 int		populate_arg_struct(char *str, va_list args, t_arg *arg);
 int		parse_print(char *str, va_list args);
 int		ft_printf(char *str, ...);
+
+// populate
+int		pf_populate_type(char *str, t_arg *arg);
+int		pf_populate_precision(char *str, t_arg *arg);
+int		pf_populate_width(char *str, t_arg *arg);
+int		pf_populate_flags(char *str, t_arg *arg);
+
+// format
+int		pf_format_minwidth(char **str, t_arg *arg);
+
+// parse
+char	*pf_parse_int(int n, t_arg *arg);
 
 #endif
