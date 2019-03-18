@@ -6,7 +6,7 @@
 /*   By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 12:46:01 by zmagauin          #+#    #+#             */
-/*   Updated: 2019/03/07 16:56:55 by zmagauin         ###   ########.fr       */
+/*   Updated: 2019/03/12 14:31:00 by zmagauin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int		pf_populate_precision(char *str, t_arg *arg)
 int		pf_populate_type(char *str, t_arg *arg)
 {
 	size_t	i;
-	char	*num;
 	char	c;
 
 	i = 0;

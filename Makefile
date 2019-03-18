@@ -1,102 +1,3 @@
-# include libprintf.mk
-
-# # directories
-# SRC_DIR  := ./src
-# INC_DIR  := ./includes
-# OBJ_DIR  := ./obj
-# TEST_DIR := ./test
-
-# # src / obj files
-# SRC		:=	main.c \
-# 			pf_setup.c \
-# 			pf_populate.c \
-# 			pf_format.c \
-
-# OBJ		:= $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
-
-# # compiler
-# CC		:= gcc
-# CFLAGS	:= -Wall -Wextra -Werror
-# CFLAGS	+= -O3 -march=native -pipe
-
-# NAME	:= $(PRINTF_NAME)
-
-# # rules
-# all: $(NAME)
-
-# $(OBJ_DIR):
-# 	mkdir -p $(OBJ_DIR)
-# 	mkdir -p $(OBJ_DIR)/util
-# 	mkdir -p $(OBJ_DIR)/handlers
-
-# $(OBJ_DIR)/%.o:$(SRC_DIR)/%.c
-# 	$(CC) $(CFLAGS) $(LIB_INC) -o $@ -c $<
-
-# $(NAME): $(OBJ_DIR) $(OBJ)
-# 	ar rc $(PRINTF_NAME) $(OBJ)
-# 	ranlib $(PRINTF_NAME)
-
-# test:
-# 	@$(MAKE) -C $(TEST_DIR) --no-print-directory
-
-# clean:
-# 	rm -rf $(OBJ_DIR)
-
-# fclean: clean
-# 	rm -f $(PRINTF_NAME)
-
-# re:
-# 	@$(MAKE) fclean --no-print-directory
-# 	@$(MAKE) all --no-print-directory
-
-# .PHONY: all clean fclean re relibs test
-
-# # **************************************************************************** #
-# #                                                                              #
-# #                                                         :::      ::::::::    #
-# #    Makefile                                           :+:      :+:    :+:    #
-# #                                                     +:+ +:+         +:+      #
-# #    By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+         #
-# #                                                 +#+#+#+#+#+   +#+            #
-# #    Created: 2016/09/21 14:58:27 by zmagauin          #+#    #+#              #
-# #    Updated: 2019/03/07 15:24:26 by zmagauin         ###   ########.fr        #
-# #                                                                              #
-# # **************************************************************************** #
-
-# NAME		= libftprintf.a
-# CFLAGS		= -I libft/ -c
-# FILES		=	main.c \
-# 				pf_setup.c \
-# 				pf_populate.c \
-# 				pf_format.c
-
-# OBJ			= $(FILES:%.c=%.o)
-
-# LIBFT = libft/libft.a
-
-# all: $(NAME)
-
-# $(LIBFT):
-# 	@make -C libft
-
-# $(NAME): $(OBJ)
-# 	@ar rcs $(NAME) $(OBJ)
-
-# $(OBJ): $(LIBFT) $(FILES)
-# 	@gcc $(LIBFT) $(CFLAGS) $(FILES)
-
-# clean:
-# 	@rm -rf $(OBJ)
-# 	@make -C libft clean
-
-# fclean: clean
-# 	@rm -rf $(NAME)
-# 	@make -C libft fclean
-
-# re: fclean all
-
-# .PHONY: clean fclean all re
-
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
@@ -104,14 +5,51 @@
 #                                                     +:+ +:+         +:+      #
 #    By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/09/21 14:58:27 by zmagauin          #+#    #+#              #
-#    Updated: 2019/03/07 14:54:40 by zmagauin         ###   ########.fr        #
+#    Created: 2019/03/12 15:09:36 by zmagauin          #+#    #+#              #
+#    Updated: 2019/03/16 20:50:23 by zmagauin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# NAME = libftprintf.a
+
+# SRC	= 	pf_format.c \
+# 		pf_parse.c \
+# 		pf_populate.c \
+# 		ft_printf.c \
+# 		pf_setup.c \
+
+# OBJ = *.o
+
+# INC = -I libft/ -I includes/
+
+# LIBFT =	libft/libft.a
+
+# all: $(NAME)
+
+# $(NAME): $(OBJ)
+# 	@$(MAKE) -C libft/
+# 	@cp libft/libft.a ./$(NAME)
+# 	@ar rc $(NAME) $(OBJ)
+# 	@ranlib $(NAME)
+
+# $(OBJ): $(SRC)
+# 	@gcc -c -Wall -Wextra $(INC) -c $^
+
+# clean:
+# 		rm -f $(OBJ)
+# 			make clean -C ./libft/
+
+# fclean: clean
+# 		rm -f $(NAME)
+# 			make fclean -C ./libft/
+
+# re: fclean all
+
+# .PHONY : all, re, clean, flcean
+
 NAME = libftprintf.a
 
-# CFLAGS +=
+CFLAGS += 
 CFLAGS += -I libft/
 
 SRC =	main.c \

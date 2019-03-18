@@ -29,10 +29,6 @@ linked to our testing main to give you your results.
     ◦ The functions of man 3 stdarg
 
 ## Mandatory Part
-char		*flags;
-int			min_width;
-int			precision;
-char		type;
 * c - The first byte of argument is printed.
 * s - Bytes from the string argument are printed until the end is reached or until the number of bytes indicated by the precision specification is reached; however if the precision is 0 or missing, the string is printed entirely.
 * p - pointer address
