@@ -1,32 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/03 07:36:10 by zmagauin          #+#    #+#             */
-/*   Updated: 2019/03/26 09:59:52 by zmagauin         ###   ########.fr       */
+/*   Created: 2015/11/28 11:37:29 by angagnie          #+#    #+#             */
+/*   Updated: 2019/03/27 11:09:16 by zmagauin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+static int		conv_ex(int nb)
 {
-	int i;
+	if (nb >= 10)
+		return (nb - 10 + 'a');
+	else
+		return (nb + '0');
+}
+
+char	*ft_itoa_base(int value, int base)
+{
+	int					i;
+	char				*str;
+	int				tmp;
 
 	i = 0;
-	if (!s)
-		return (NULL);
-	while (s[i])
+	tmp = value;
+	while (tmp >= base)
 	{
-		if (s[i] == c)
-			return ((char *)(s + i));
-		else
-			i++;
+		tmp = tmp / base;
+		i++;
 	}
-	if (s[i] == c)
-		return ((char *)(s + i));
-	return (NULL);
+	if (!(str = (char *)malloc(sizeof(char) * (i + 1))))
+		return (NULL);
+	str[i + 1] = '\0';
+	while (i >= 0)
+	{
+		tmp = value % base;
+		str[i] = conv_ex(tmp);
+		value /= base;
+		i--;
+	}
+	return (str);
 }

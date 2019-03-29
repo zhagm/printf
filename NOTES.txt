@@ -1,0 +1,1 @@
+note of where i was: adding itoa-base, trying to figure out hh ll h l and how to structure my code. seg fault in hh ll, make sure no seg fautls for undefined behavior.
