@@ -6,14 +6,14 @@
 /*   By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 12:46:01 by zmagauin          #+#    #+#             */
-/*   Updated: 2019/03/22 16:33:03 by zmagauin         ###   ########.fr       */
+/*   Updated: 2019/03/30 13:59:18 by zmagauin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdlib.h>
 
-int		pf_populate_flags(char *str, t_arg *arg)
+int		populate_flags(char *str, t_arg *arg)
 {
 	size_t	i;
 
@@ -28,7 +28,7 @@ int		pf_populate_flags(char *str, t_arg *arg)
 	return (i);
 }
 
-int		pf_populate_width(char *str, t_arg *arg)
+int		populate_width(char *str, t_arg *arg)
 {
 	size_t	i;
 	char	*num;
@@ -47,12 +47,15 @@ int		pf_populate_width(char *str, t_arg *arg)
 	return (i);
 }
 
-int		pf_populate_precision(char *str, t_arg *arg)
+int		populate_precision(char *str, t_arg *arg)
 {
 	size_t	i;
 	char	*num;
 
 	i = 0;
+	if (str[i] != '.')
+		return (i);
+	i++;
 	while (str[i] >= 48 && str[i] <= 57)
 		i++;
 	if (i > 0)
@@ -66,7 +69,7 @@ int		pf_populate_precision(char *str, t_arg *arg)
 	return (i);
 }
 
-int		pf_populate_type(char *str, t_arg *arg)
+int		populate_type(char *str, t_arg *arg)
 {
 	size_t	i;
 	char	c;
@@ -79,7 +82,18 @@ int		pf_populate_type(char *str, t_arg *arg)
 		arg->type = c;
 		i++;
 	}
-	else
-		return (-1);
+	// add error check? if not valid type?
+	return (i);
+}
+
+int		populate_arg_struct(char *str,t_arg *arg)
+{
+	size_t	i;
+
+	i = 0;
+	i += populate_flags(str + i, arg);
+	i += populate_width(str + i, arg);
+	i += populate_precision(str + i, arg);
+	i += populate_type(str + i, arg);
 	return (i);
 }

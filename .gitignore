@@ -2,4 +2,7 @@
 */*.a
 *.mk
 .vscode
-author
+authortesting/
+testing
+.*
+NOTES.txt

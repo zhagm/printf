@@ -6,29 +6,12 @@
 /*   By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:32:19 by zmagauin          #+#    #+#             */
-/*   Updated: 2019/03/26 09:53:35 by zmagauin         ###   ########.fr       */
+/*   Updated: 2019/04/01 10:32:45 by zmagauin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdlib.h>
-
-int		populate_arg_struct(char *str, va_list args, t_arg *arg)
-{
-	size_t	i;
-
-	i = 0;
-	(void)args;
-	i += pf_populate_flags(str + i, arg);
-	i += pf_populate_width(str + i, arg);
-	if (str[i] == '.')
-	{
-		i++;
-		i += pf_populate_precision(str + i, arg);
-	}
-	i += pf_populate_type(str + i, arg);
-	return (i);
-}
 
 int		parse_print(char *str, va_list args)
 {
@@ -52,7 +35,7 @@ int		parse_print(char *str, va_list args)
 			res = ft_strnjoin(res, str + start, i - start);
 			start = i;
 		}
-		diff = populate_arg_struct(str + i + 1, args, curr);
+		diff = populate_arg_struct(str + i + 1, curr);
 		if (diff > 0)
 			i += diff + 1;
 		else

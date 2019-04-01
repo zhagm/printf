@@ -6,7 +6,7 @@
 /*   By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:37:31 by zmagauin          #+#    #+#             */
-/*   Updated: 2019/03/28 12:10:08 by zmagauin         ###   ########.fr       */
+/*   Updated: 2019/04/01 10:52:08 by zmagauin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		pf_parser(char **str, t_arg *arg, va_list args)
 {
 	int		i;
+	char	*hold;
 	t_parser parse[] = {
 		{ "DdIiouxX", &pf_parse_int },
 		{ "sS", &pf_parse_str },
@@ -26,105 +27,112 @@ int		pf_parser(char **str, t_arg *arg, va_list args)
 	{
 		if (ft_strchr(parse[i].type, arg->type))
 		{
-			parse[i].parser_func(arg, args, str);
+			parse[i].parser_func(arg, args);
+			hold = *str;
+			*str = ft_strjoin(*str, arg->str);
+			free(hold);
 		}
 		i++;
 	}
 	return (0);
 }
 
-int		pf_parse_mod(t_arg *arg, va_list args, char **str)
+int		pf_parse_mod(t_arg *arg, va_list args)
 {
 	char	*res;
-	char	*hold;
 
 	(void)args;
-	res = ft_strnew(1);
-	res[0] = '%';
+	res = ft_strdup("%");
 	if (arg->min_width && (int)ft_strlen(res) < arg->min_width)
 	{
-		if (pf_format_minwidth(&res, arg) == -1)
+		if (pf_format_minwidth(&res, arg, NULL) == -1)
 			return (-1);
 	}
-	hold = *str;
-	*str = ft_strjoin(*str, res);
-	free(hold);
-	free(res);
+	arg->str = res;
 	return (1);
 }
 
-int		pf_parse_str(t_arg *arg, va_list args, char **str)
+int		pf_parse_str(t_arg *arg, va_list args)
 {
 	char	*res;
-	char	*hold;
 
 	res = va_arg(args, char *);
 	if (res == NULL)
-		res = "(null)";
+		res = ft_strdup("(null)");
 	if (arg->min_width && (int)ft_strlen(res) < arg->min_width)
 	{
-		if (pf_format_minwidth(&res, arg) == -1)
+		if (pf_format_minwidth(&res, arg, NULL) == -1)
 			return (-1);
 	}
-	hold = *str;
-	*str = ft_strjoin(*str, res);
-	// free(hold);
-	// free(res);
+	arg->str = res;
 	return (1);
 }
 
-int		pf_parse_int(t_arg *arg, va_list args, char **str)
+int		get_base(char type)
+{
+	if (type == 'x' || type == 'X')
+		return (16);
+	if (type == 'o' || type == 'O')
+		return (8);
+	return (10);
+}
+
+char	*alternate(t_arg *arg, int n)
+{
+	if (ft_strchr(arg->flags, '#') && n != 0)
+	{
+		if (arg->type == 'x' || arg->type == 'X')
+			return (ft_strdup("0x"));
+		if (arg->type == 'o' || arg->type == 'O')
+			return (ft_strdup("0"));
+	}
+	return (NULL);
+}
+
+int		pf_parse_int(t_arg *arg, va_list args)
 {
 	char	*res;
 	char	*hold;
 	int		n;
-	int		base;
 	char	*leader;
 
 	n = va_arg(args, int);
-	base = 10;
-	if (ft_strchr("xX", arg->type))
-		base = 16;
-	else if (ft_strchr("oO", arg->type))
-		base = 8;
-	res = ft_itoa_base(n, base);
-	if (res == NULL)
+	if ((res = ft_itoa_base(n, get_base(arg->type))) == NULL)
 		return (-1);
 	if (arg->flags)
 	{
-		leader = NULL;
+		leader = ft_strnew(0);
 		if (ft_strchr(arg->flags, '+') && n >= 0)
 			leader = ft_strdup("+");
-		else if (ft_strchr(arg->flags, ' '))
+		if (ft_strchr(arg->flags, ' ') && !(ft_strchr(arg->flags, '+')))
 			leader = ft_strdup(" ");
-		else if (ft_strchr(arg->flags, '0') && !(ft_strchr(arg->flags, '-')))
-			leader = ft_strdup("0");
 		if (leader)
 		{
-			hold = *str;
-			*str = ft_strjoin(leader, *str);
+			hold = res;
+			res = ft_strjoin(leader, res);
 			free(hold);
 			free(leader);
 		}
 	}
 	if (arg->min_width && (int)ft_strlen(res) < arg->min_width)
 	{
-		if (pf_format_minwidth(&res, arg) == -1)
+		if (pf_format_minwidth(&res, arg, alternate(arg, n)) == -1)
 			return (-1);
 	}
-	hold = *str;
+	else if ((leader = alternate(arg, n)))
+	{
+		hold = res;
+		res = ft_strjoin(leader, res);
+		free(hold);
+		free(leader);
+	}
 	if (arg->type == 'X' || arg->type == 'O')
 	{
-		n = 0;
-		while (res[n])
-		{
-			if (res[n] >= 65 && res[n] <= 90)
+		n = -1;
+		while (res[++n])
+			if (res[n] >= 'a' && res[n] <= 'z')
 				res[n] = ft_toupper(res[n]);
-			n++;
-		}
 	}
-	*str = ft_strjoin(*str, res);
-	free(hold);
-	free(res);
+	arg->str = res;
 	return (1);
 }

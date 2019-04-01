@@ -1,1 +1,5 @@
 note of where i was: adding itoa-base, trying to figure out hh ll h l and how to structure my code. seg fault in hh ll, make sure no seg fautls for undefined behavior.
+
+
+strjoin needs to be normed, modified to work with non-null terminating strs
+why was the str not null terminated??? %32s, "abc" wouldn't work, follow the functions that would have been called and figure out why seg fautl is happening?
