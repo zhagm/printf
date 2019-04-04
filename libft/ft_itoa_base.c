@@ -6,42 +6,44 @@
 /*   By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/28 11:37:29 by angagnie          #+#    #+#             */
-/*   Updated: 2019/03/27 11:09:16 by zmagauin         ###   ########.fr       */
+/*   Updated: 2019/04/03 15:23:28 by zmagauin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		conv_ex(int nb)
+char		*ft_itoa_base(int value, int base)
 {
-	if (nb >= 10)
-		return (nb - 10 + 'a');
-	else
-		return (nb + '0');
-}
+	int		len;
+	long	nbr;
+	char	*pointer;
+	char	*base_string = "0123456789abcdef";
 
-char	*ft_itoa_base(int value, int base)
-{
-	int					i;
-	char				*str;
-	int				tmp;
-
-	i = 0;
-	tmp = value;
-	while (tmp >= base)
+	if (value == 0)
+		return ("0");
+	len = 0;
+	nbr = value;
+	while (nbr)
 	{
-		tmp = tmp / base;
-		i++;
+		nbr /= base;
+		len += 1;
 	}
-	if (!(str = (char *)malloc(sizeof(char) * (i + 1))))
+	nbr = value;
+	if (nbr < 0)
+	{
+		if (base == 10)
+			len += 1;
+		nbr *= -1;
+	}
+	if (!(pointer = (char *)malloc(sizeof(char) * len + 1)))
 		return (NULL);
-	str[i + 1] = '\0';
-	while (i >= 0)
+	pointer[len] = '\0';
+	while (nbr)
 	{
-		tmp = value % base;
-		str[i] = conv_ex(tmp);
-		value /= base;
-		i--;
+		pointer[--len] = base_string[nbr % base];
+		nbr /= base;
 	}
-	return (str);
+	if (value < 0 && base == 10)
+		pointer[0] = '-';
+	return (pointer);
 }

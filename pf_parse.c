@@ -6,7 +6,7 @@
 /*   By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 15:37:31 by zmagauin          #+#    #+#             */
-/*   Updated: 2019/04/01 10:52:08 by zmagauin         ###   ########.fr       */
+/*   Updated: 2019/04/03 15:31:36 by zmagauin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ int		pf_parser(char **str, t_arg *arg, va_list args)
 	int		i;
 	char	*hold;
 	t_parser parse[] = {
-		{ "DdIiouxX", &pf_parse_int },
+		{ "di", &pf_parse_int },
+		{ "ouxX", &pf_parse_uint },
 		{ "sS", &pf_parse_str },
 		{ "%%", &pf_parse_mod }
 	};
 
 	i = 0;
-	while (i < 3)
+	while (i < 4)
 	{
 		if (ft_strchr(parse[i].type, arg->type))
 		{
@@ -59,6 +60,8 @@ int		pf_parse_str(t_arg *arg, va_list args)
 	res = va_arg(args, char *);
 	if (res == NULL)
 		res = ft_strdup("(null)");
+	if (arg->precision && arg->precision < (int)ft_strlen(res))
+		res = ft_strsub(res, 0, (size_t)arg->precision);
 	if (arg->min_width && (int)ft_strlen(res) < arg->min_width)
 	{
 		if (pf_format_minwidth(&res, arg, NULL) == -1)
@@ -89,7 +92,7 @@ char	*alternate(t_arg *arg, int n)
 	return (NULL);
 }
 
-int		pf_parse_int(t_arg *arg, va_list args)
+int		pf_parse_uint(t_arg *arg, va_list args)
 {
 	char	*res;
 	char	*hold;
@@ -132,6 +135,63 @@ int		pf_parse_int(t_arg *arg, va_list args)
 		while (res[++n])
 			if (res[n] >= 'a' && res[n] <= 'z')
 				res[n] = ft_toupper(res[n]);
+	}
+	arg->str = res;
+	return (1);
+}
+
+int		pf_parse_int(t_arg *arg, va_list args)
+{
+	char	*res;
+	char	*hold;
+	int		n;
+	char	*leader;
+	int		neg;
+
+	n = va_arg(args, int);
+	if (n < 0)
+	{
+		n *= -1;
+		neg = 1;
+	}
+	else
+		neg = 0;
+	if ((res = ft_itoa_base(n, get_base(arg->type))) == NULL)
+		return (-1);
+	if (arg->flags || neg)
+	{
+		leader = ft_strnew(0);
+		if ((ft_strchr(arg->flags, '+') || neg) && !ft_strchr(arg->flags, '0'))
+			leader = ft_strdup(neg ? "-" : "+");
+		else if (ft_strchr(arg->flags, ' ') && n > 0 && !(ft_strchr(arg->flags, '+')))
+			leader = ft_strdup(" ");
+		if (leader)
+		{
+			hold = res;
+			res = ft_strjoin(leader, res);
+			free(hold);
+			free(leader);
+		}
+	}
+	if (arg->min_width && (int)ft_strlen(res) < arg->min_width)
+	{
+		if ((ft_strchr(arg->flags, '+') || neg) && ft_strchr(arg->flags, '0'))
+			arg->min_width--;
+		if (pf_format_minwidth(&res, arg, alternate(arg, n)) == -1)
+			return (-1);
+		if ((ft_strchr(arg->flags, '+') || neg) && ft_strchr(arg->flags, '0'))
+		{
+			hold = res;
+			res = ft_strjoin(neg ? "-" : "+", res);
+			free(hold);
+		}
+	}
+	else if ((leader = alternate(arg, n)))
+	{
+		hold = res;
+		res = ft_strjoin(leader, res);
+		free(hold);
+		free(leader);
 	}
 	arg->str = res;
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: zmagauin <zmagauin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 12:46:01 by zmagauin          #+#    #+#             */
-/*   Updated: 2019/03/30 13:59:18 by zmagauin         ###   ########.fr       */
+/*   Updated: 2019/04/02 07:32:37 by zmagauin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int		populate_precision(char *str, t_arg *arg)
 	i++;
 	while (str[i] >= 48 && str[i] <= 57)
 		i++;
-	if (i > 0)
+	if (i > 1)
 	{
-		num = ft_strsub(str, 0, i);
+		num = ft_strsub(str, 1, i - 1);
 		arg->precision = ft_atoi(num);
 		free(num);
 	}
