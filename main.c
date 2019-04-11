@@ -27,23 +27,9 @@ int		ft_printf(char *str, ...)
 int		main(void)
 {
 	int temp;
-
-	ft_printf("%d %d %d %d gg!\n", 1, -2, 33, 42, 0);
-	ft_printf("%x", 42);
-	ft_printf("1 -2 33 42 gg!|||||||||||||||<<<<< should be this\n");
-	ft_printf("|% d|\n|-42|<<<<<<<<<\n", -42);
-	ft_printf("|%+d|\n|-42|<<<<<<<<<\n", -42);
-	// ft_printf("|%+d|\n|+0|<<<<<<<<<\n", 0);
-	// ft_printf("|%+d|\n|-1|<<<<<<<<<\n", 4242424242424242424242);
-	ft_printf("|% +d|\n|-42|<<<<<<<<<\n", -42);
-	ft_printf("|%+ d|\n|-42|<<<<<<<<<\n", -42);
-	ft_printf("|%  +d|\n|-42|<<<<<<<<<\n", -42);
-	ft_printf("|%+  d|\n|-42|<<<<<<<<<\n", -42);
-	ft_printf("|% ++d|\n|-42|<<<<<<<<<\n", -42);
-	ft_printf("|%++ d|\n|-42|<<<<<<<<<\n", -42);
-	ft_printf("|%0+5d|\n|+0042|<<<<<<<<<\n", 42);
-	ft_printf("|%05d|\n|-0042|<<<<<<<<<\n", -42);
-	ft_printf("|%0+5d|\n|-0042|<<<<<<<<<\n", -42);
+	ft_printf("|%d| should be\n|-42|<<<<<\n", -42);
+	ft_printf("|%0d| should be\n|-42|<<<<<\n", -42);
+	ft_printf("|%00d| should be\n|-42|<<<<<\n", -42);
 // 	  97.      ft_printf("%d", 1);                           -> "1"
 //   98.      ft_printf("the %d", 1);                       -> "the 1"
 //   99.      ft_printf("%d is one", 1);                    -> "1 is one"

@@ -6,3 +6,4 @@ authortesting/
 testing
 .*
 NOTES.txt
+*.out

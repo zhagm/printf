@@ -31,7 +31,7 @@ int		pf_parser(char **str, t_arg *arg, va_list args)
 			parse[i].parser_func(arg, args);
 			hold = *str;
 			*str = ft_strjoin(*str, arg->str);
-			free(hold);
+			// free(hold);
 		}
 		i++;
 	}
@@ -113,8 +113,8 @@ int		pf_parse_uint(t_arg *arg, va_list args)
 		{
 			hold = res;
 			res = ft_strjoin(leader, res);
-			free(hold);
-			free(leader);
+			// free(hold);
+			// free(leader);
 		}
 	}
 	if (arg->min_width && (int)ft_strlen(res) < arg->min_width)
@@ -126,8 +126,8 @@ int		pf_parse_uint(t_arg *arg, va_list args)
 	{
 		hold = res;
 		res = ft_strjoin(leader, res);
-		free(hold);
-		free(leader);
+		// free(hold);
+		// free(leader);
 	}
 	if (arg->type == 'X' || arg->type == 'O')
 	{
@@ -169,8 +169,8 @@ int		pf_parse_int(t_arg *arg, va_list args)
 		{
 			hold = res;
 			res = ft_strjoin(leader, res);
-			free(hold);
-			free(leader);
+			// free(hold);
+			// free(leader);
 		}
 	}
 	if (arg->min_width && (int)ft_strlen(res) < arg->min_width)
@@ -183,15 +183,15 @@ int		pf_parse_int(t_arg *arg, va_list args)
 		{
 			hold = res;
 			res = ft_strjoin(neg ? "-" : "+", res);
-			free(hold);
+			// free(hold);
 		}
 	}
 	else if ((leader = alternate(arg, n)))
 	{
 		hold = res;
 		res = ft_strjoin(leader, res);
-		free(hold);
-		free(leader);
+		// free(hold);
+		// free(leader);
 	}
 	arg->str = res;
 	return (1);
