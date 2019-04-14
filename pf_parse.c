@@ -60,6 +60,7 @@ int		pf_parse_str(t_arg *arg, va_list args)
 	res = va_arg(args, char *);
 	if (res == NULL)
 		res = ft_strdup("(null)");
+	printf("arg->precision = %d\n", arg->precision);
 	if (arg->precision && arg->precision < (int)ft_strlen(res))
 		res = ft_strsub(res, 0, (size_t)arg->precision);
 	if (arg->min_width && (int)ft_strlen(res) < arg->min_width)
@@ -190,8 +191,16 @@ int		pf_parse_int(t_arg *arg, va_list args)
 	{
 		hold = res;
 		res = ft_strjoin(leader, res);
-		// free(hold);
-		// free(leader);
+		if ((ft_strchr(arg->flags, '+') || neg) && ft_strchr(arg->flags, '0'))
+		{
+			hold = res;
+			res = ft_strjoin(neg ? "-" : "+", res);
+		}
+	}
+	else if ((ft_strchr(arg->flags, '+') || neg) && ft_strchr(arg->flags, '0'))
+	{
+		hold = res;
+		res = ft_strjoin(neg ? "-" : "+", res);
 	}
 	arg->str = res;
 	return (1);

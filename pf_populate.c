@@ -60,6 +60,7 @@ int		populate_precision(char *str, t_arg *arg)
 		i++;
 	if (i > 1)
 	{
+		printf("i = %zu\n", i);
 		num = ft_strsub(str, 1, i - 1);
 		arg->precision = ft_atoi(num);
 		free(num);
@@ -93,7 +94,7 @@ int		populate_arg_struct(char *str,t_arg *arg)
 	i = 0;
 	i += populate_flags(str + i, arg);
 	i += populate_width(str + i, arg);
-	i += populate_precision(str + i, arg);
+	i += populate_precision(str, arg);
 	i += populate_type(str + i, arg);
 	return (i);
 }
